@@ -1,9 +1,11 @@
 'use strict';
 const LINE_ADMIN_USER_ID = process.env.LINE_ADMIN_USER_ID;
+const debug = require("debug")("bot-express:skill");
+
 
 
 module.exports = class Escalation {
-    async finish(bot, event, context){
+    async finish(bot, event, context, resolve, reject){
         let tasks = [];
 
         // Reply to sender.
