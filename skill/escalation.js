@@ -14,6 +14,7 @@ module.exports = class Escalation {
             text: "すぐ調べます。ちょっとお待ちを。"
         }));
 		debug(`hoge`);
+		debug(`${bot}`)
 		tasks.push(
             Promise.resolve()
             .then((response) => {
@@ -22,6 +23,7 @@ module.exports = class Escalation {
                 return bot.plugin.line.sdk.getProfile(bot.extract_sender_id());
             })
             .then((response) => {
+            	debug(`1`);
                 if (!response){
                     return Promise.reject(new Error(`Sender user not found.`));
                 }
@@ -37,6 +39,7 @@ module.exports = class Escalation {
         return Promise.all(tasks).then((response) => {
             return resolve();
         }).catch((error) => {
+        	debug(`ダメでした`);
             return reject();
         });
     }
