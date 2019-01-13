@@ -38,8 +38,7 @@ module.exports = class Escalation {
 
                 messages_to_admin.push({
                     type: "text",
-                    text: `如何しようも無い`;
-                    
+                    text: "如何しようも無い"
                 });
 
                 // Send message to admin.
