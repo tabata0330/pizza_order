@@ -18,9 +18,11 @@ module.exports = class Escalation {
             Promise.resolve()
             .then((response) => {
                 // Get sender's displayName.
+                debug(`use_id is ${bot.plugin.line.sdk.getProfile(bot.extract_sender_id())}`)
                 return bot.plugin.line.sdk.getProfile(bot.extract_sender_id());
             })
             .then((response) => {
+            	debug(`in`);
                 if (!response){
                     return Promise.reject(new Error(`Sender user not found.`));
                 }
