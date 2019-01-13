@@ -9,10 +9,10 @@ module.exports = class Escalation {
     async finish(bot, event, context, resolve, reject){
         let tasks = [];
 
-        bot.reply({
-            type: "text",
-            text: "すぐ調べます。ちょっとお待ちを。"
-        });
+        // bot.reply({
+//             type: "text",
+//             text: "すぐ調べます。ちょっとお待ちを。"
+//         });
         let sender_id = bot.extract_sender_id();
         let url = 'https://api.line.me/v2/bot/profile/' + sender_id;
         let headers = {
