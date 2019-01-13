@@ -13,7 +13,6 @@ module.exports = class Escalation {
             type: "text",
             text: "すぐ調べます。ちょっとお待ちを。"
         });
-        debug("送った");
         let sender_id = bot.extract_sender_id();
         let get_profile_options = {
             url: 'https://api.line.me/v2/bot/profile/' + sender_id,
@@ -22,25 +21,20 @@ module.exports = class Escalation {
                 'Authorization': 'Bearer {' + process.env.LINE_ACCESS_TOKEN + '}'
             }
         }
-        let head = JSON.stringify(get_profile_options);
-        debug(`header: ${head}`);
-        
-        debug("レスポンスもらう");
+        let display_name = '';
+        let pict = '';
         request.get(get_profile_options, function(error, response, body) {
             if (!error && response.statusCode == 200) {
-            	debug("はいった");
-                debug(`${body['displayName']}`);
+            	display_name = body['displayName'];
+            	pict = body['pictureUrl'];
     	    }else if(error){
     	    	debug("ダメでした");
     	    }
-    	    debug(`status code: ${response.statusCode}`);
         });
-        let orig_message = JSON.stringify(event.message);
-        debug(`!!!!!!!!!!orig_message: ${orig_message}`);
-        
-        // bot.reply({
-//         	type: "text",
-//         	text: `${response.body.userId}の${response.body.displayName}さん。わからないメッセージはやめてください！！！`
-//         });
+        let orig_message = JSON.parse(JSON.stringify(event.message));
+        bot.reply({
+        	type: "text",
+        	text: `${display_name}さん。${orig_message['text']}のようなわからないメッセージはやめてください！！！`
+        });
     }
 };
