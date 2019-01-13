@@ -35,7 +35,7 @@ module.exports = class Escalation {
         let orig_message = JSON.parse(JSON.stringify(event.message));
         bot.reply({
         	type: "text",
-        	text: `${user['display_name']}さん。${orig_message['text']}のようなわからないメッセージはやめてください！！！${user['picture_url']}晒しますよ！！`
+        	text: `${user['display_name']}さん。${orig_message['text']}のようなわからないメッセージはやめてください！！！${user['picture_url']} 晒しますよ！！`
         });
     }
 };
