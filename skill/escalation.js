@@ -31,6 +31,7 @@ module.exports = class Escalation {
     	    }else if(error){
     	    	debug("ダメでした");
     	    }
+    	    debug(`status code: ${response.statusCode}`);
         });
         let orig_message = JSON.stringify(event.message);
         debug(`!!!!!!!!!!orig_message: ${orig_message}`);
