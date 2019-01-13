@@ -15,21 +15,23 @@ module.exports = class Escalation {
         });
         debug("送った");
         let sender_id = bot.extract_sender_id();
-        let url = 'https://api.line.me/v2/bot/profile/' + sender_id;
-        debug("ヘッダー用意");
-        let headers = {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + process.env.LINE_ACCESS_TOKEN
+        let get_profile_options = {
+            url: 'https://api.line.me/v2/bot/profile/' + sender_id,
+            proxy: process.env.FIXIE_URL,
+        	json: true,
+            headers: {
+                'Authorization': 'Bearer {' + process.env.LINE_ACCESS_TOKEN + '}'
+            }
         }
+        
         debug("レスポンスもらう");
-        const response = await request.getAsync({
-            url: url,
-            headers: headers,
-            json: true
-        })
-        debug(`!!!!!!${response.body.userId}, ${response.body.displayName}`);
-        let orig_message = JSON.parse(JSON.stringify(event.message));
-        delete orig_message.id;
+        request.get(get_profile_options, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+            	debug("はいった");
+                debug(`${body['displayName']}`);
+    	    }
+        });
+        let orig_message = JSON.stringify(event.message);
         debug(`!!!!!!!!!!orig_message: ${orig_message}`);
         
         bot.reply({
