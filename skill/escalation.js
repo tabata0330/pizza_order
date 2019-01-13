@@ -27,14 +27,17 @@ module.exports = class Escalation {
             if (!error && response.statusCode == 200) {
             	display_name = body['displayName'];
             	pict = body['pictureUrl'];
+            	debug(`中first${display_name}, ${pict}`);
+            	debug(`中second${body['displayName']}, ${body['pictureUrl']}`);
     	    }else if(error){
     	    	debug("ダメでした");
     	    }
         });
+        debug(`外${display_name}, ${pict}`);
         let orig_message = JSON.parse(JSON.stringify(event.message));
         bot.reply({
         	type: "text",
-        	text: `${display_name}さん。${orig_message['text']}のようなわからないメッセージはやめてください！！！`
+        	text: `${display_name}さん。${orig_message['text']}のようなわからないメッセージはやめてください！！！${pict}晒しますよ！！`
         });
     }
 };
