@@ -1,8 +1,9 @@
 'use strict';
 const LINE_ADMIN_USER_ID = process.env.LINE_ADMIN_USER_ID;
 const debug = require("debug")("bot-express:skill");
-
-
+const request = require("request");
+Promise = require("bluebird");
+Promise.promisifyAll(request);
 
 module.exports = class Escalation {
     async finish(bot, event, context, resolve, reject){
