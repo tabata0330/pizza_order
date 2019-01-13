@@ -11,7 +11,7 @@ module.exports = class Escalation {
             type: "text",
             text: "すぐ調べます。ちょっとお待ちを。"
         }));
-
+		debug(`hoge`);
 		tasks.push(
             Promise.resolve()
             .then((response) => {
