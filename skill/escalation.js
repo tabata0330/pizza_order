@@ -32,6 +32,6 @@ module.exports = class Escalation {
             picture_url: response.body.pictureUrl
         }
         
-		debug(`ユーザーは: $user`)
+		debug(`ユーザーは: ${user}`)
     }
 };
