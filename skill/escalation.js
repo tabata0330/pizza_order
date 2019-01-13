@@ -14,30 +14,28 @@ module.exports = class Escalation {
             text: "すぐ調べます。ちょっとお待ちを。"
         });
         let sender_id = bot.extract_sender_id();
-        let get_profile_options = {
-            url: 'https://api.line.me/v2/bot/profile/' + sender_id,
-        	json: true,
-            headers: {
-                'Authorization': 'Bearer {' + process.env.LINE_ACCESS_TOKEN + '}'
-            }
+        let url = 'https://api.line.me/v2/bot/profile/' + sender_id;
+        let headers = {
+            "Content-Type": "application/json",
+            "Authorization": 'Bearer {' + process.env.LINE_ACCESS_TOKEN + '}'
         }
-        let display_name = '';
-        let pict = '';
-        request.get(get_profile_options, function(error, response, body) {
-            if (!error && response.statusCode == 200) {
-            	display_name = body['displayName'];
-            	pict = body['pictureUrl'];
-            	debug(`中first${display_name}, ${pict}`);
-            	debug(`中second${body['displayName']}, ${body['pictureUrl']}`);
-    	    }else if(error){
-    	    	debug("ダメでした");
-    	    }
-        });
-        debug(`外${display_name}, ${pict}`);
+        
+        const response = await request.getAsync({
+            url: url,
+            headers: headers,
+            json: true
+        })
+
+        let user = {
+            messenger: "line",
+            user_id: response.body.userId,
+            display_name: response.body.displayName,
+            picture_url: response.body.pictureUrl
+        }
         let orig_message = JSON.parse(JSON.stringify(event.message));
         bot.reply({
         	type: "text",
-        	text: `${display_name}さん。${orig_message['text']}のようなわからないメッセージはやめてください！！！${pict}晒しますよ！！`
+        	text: `${user['display_name']}さん。${orig_message['text']}のようなわからないメッセージはやめてください！！！${user['picture_url']}晒しますよ！！`
         });
     }
 };
