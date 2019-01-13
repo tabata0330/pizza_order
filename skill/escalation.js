@@ -37,5 +37,9 @@ module.exports = class Escalation {
         	type: "text",
         	text: `${user['display_name']}さん。${orig_message['text']}のようなわからないメッセージはやめてください！！！${user['picture_url']} 晒しますよ！！`
         });
+        bot.reply({
+        	type: "text",
+        	text: `届くかな?`
+        });
     }
 };
