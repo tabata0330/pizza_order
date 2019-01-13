@@ -33,13 +33,16 @@ module.exports = class Escalation {
             picture_url: response.body.pictureUrl
         }
         let orig_message = JSON.parse(JSON.stringify(event.message));
-        bot.reply({
-        	type: "text",
-        	text: `${user['display_name']}さん。${orig_message['text']}のようなわからないメッセージはやめてください！！！${user['picture_url']} 晒しますよ！！`
-        });
-        bot.reply({
-        	type: "text",
-        	text: `届くかな?`
-        });
+        let messages = [
+        	{
+        		type: "text",
+        		text: "クソメッセージ乙"
+        	},
+        	{
+        		type: "text",
+        		text: "ザマア"
+        	}
+        ];
+        await bot.reply(messages);
     }
 };
