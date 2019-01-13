@@ -24,20 +24,14 @@ module.exports = class Escalation {
             headers: headers,
             json: true
         })
-        
-        let user = {
-            messenger: "line",
-            user_id: response.body.userId,
-            display_name: response.body.displayName,
-            picture_url: response.body.pictureUrl
-        }
+        debug(`${response.body.userId}, ${response.body.displayName}`);
         let orig_message = JSON.parse(JSON.stringify(event.message));
         delete orig_message.id;
-        debug(`orig_message: ${orig_message}`);
+        debug(`!!!!!!!!!!orig_message: ${orig_message}`);
         
         bot.reply({
         	type: "text",
-        	text: `${user['display_name']}, ${user['user_id']}さん。わからないメッセージはやめてください！！！`
+        	text: `${response.body.userId}の${response.body.displayName}さん。わからないメッセージはやめてください！！！`
         });
     }
 };
