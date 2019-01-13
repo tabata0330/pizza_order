@@ -32,6 +32,9 @@ module.exports = class Escalation {
             picture_url: response.body.pictureUrl
         }
         
-		debug(`ユーザーは: ${user}`)
+        bot.reply{(
+        	type: "text",
+        	text: `${user.display_name}, ${user.user_id}さん。わけのわからないメッセージはやめてください！！！`
+        });
     }
 };
