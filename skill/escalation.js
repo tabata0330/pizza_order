@@ -31,10 +31,13 @@ module.exports = class Escalation {
             display_name: response.body.displayName,
             picture_url: response.body.pictureUrl
         }
+        let orig_message = JSON.parse(JSON.stringify(event.message));
+        delete orig_message.id;
+        debug(`orig_message: ${orig_message}`);
         
         bot.reply({
         	type: "text",
-        	text: `${user.display_name}, ${user.user_id}さん。${event.message}のようなわけのわからないメッセージはやめてください！！！`
+        	text: `${user['display_name']}, ${user['user_id']}さん。わからないメッセージはやめてください！！！`
         });
     }
 };
