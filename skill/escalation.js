@@ -16,6 +16,7 @@ module.exports = class Escalation {
             Promise.resolve()
             .then((response) => {
                 // Get sender's displayName.
+                debug("ゲットしてる");
                 return bot.plugin.line.sdk.getProfile(bot.extract_sender_id());
             })
             .then((response) => {
