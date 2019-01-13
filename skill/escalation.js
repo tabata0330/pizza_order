@@ -22,6 +22,8 @@ module.exports = class Escalation {
                 'Authorization': 'Bearer {' + process.env.LINE_ACCESS_TOKEN + '}'
             }
         }
+        let head = JSON.stringify(get_profile_options);
+        debug(`header: ${head}`);
         
         debug("レスポンスもらう");
         request.get(get_profile_options, function(error, response, body) {
