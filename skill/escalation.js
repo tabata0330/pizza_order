@@ -17,7 +17,6 @@ module.exports = class Escalation {
         let sender_id = bot.extract_sender_id();
         let get_profile_options = {
             url: 'https://api.line.me/v2/bot/profile/' + sender_id,
-            proxy: process.env.FIXIE_URL,
         	json: true,
             headers: {
                 'Authorization': 'Bearer {' + process.env.LINE_ACCESS_TOKEN + '}'
@@ -29,14 +28,16 @@ module.exports = class Escalation {
             if (!error && response.statusCode == 200) {
             	debug("はいった");
                 debug(`${body['displayName']}`);
+    	    }else if(error){
+    	    	debug("ダメでした");
     	    }
         });
         let orig_message = JSON.stringify(event.message);
         debug(`!!!!!!!!!!orig_message: ${orig_message}`);
         
-        bot.reply({
-        	type: "text",
-        	text: `${response.body.userId}の${response.body.displayName}さん。わからないメッセージはやめてください！！！`
-        });
+        // bot.reply({
+//         	type: "text",
+//         	text: `${response.body.userId}の${response.body.displayName}さん。わからないメッセージはやめてください！！！`
+//         });
     }
 };
