@@ -20,7 +20,9 @@ module.exports = class Escalation {
             .then((response) => {
                 // Get sender's displayName.
                 debug("ゲットしてる");
-                return bot.plugin.line.sdk.getProfile(bot.extract_sender_id());
+                let disname = bot.plugin.line.sdk.getProfile(bot.extract_sender_id())
+                debug("ゲットできた!!");
+                return dispname;
             })
             .then((response) => {
             	debug(`1`);
