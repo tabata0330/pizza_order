@@ -8,9 +8,12 @@ module.exports = class Showtable {
         var pizza_list = [];
         db.any('SELECT * FROM pizza')
         .then(function(data){
-            var data_s = JSON.stringify(data);
-            debug(`入ったpizza${data_s}`);
-            pizza_list.push(data);
+            data.forEach(row => {
+                for (let key of Object.keys(row)) {
+                    pizza_list.push(row['name']);
+                    debug(`name${row['name']}`)
+                }
+            });
         })
         .catch(function (error) {
             debug(`error occurred at pizza SELECT`);
@@ -19,9 +22,12 @@ module.exports = class Showtable {
         var size_list = [];
         db.any('SELECT * FROM size')
         .then(function(data){
-            var data_s = JSON.stringify(data);
-            debug(`入ったsize${data_s}`);
-            size_list.push(data);
+            data.forEach(row => {
+                for (let key of Object.keys(row)) {
+                    size_list.push(row['size']);
+                    debug(`size${row['size']}`)
+                }
+            });
         })
         .catch(function (error) {
             debug(`error occurred at size SELECT`);
