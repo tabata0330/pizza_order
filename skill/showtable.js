@@ -22,7 +22,7 @@ module.exports = class Showtable {
         .then(function(data){
             data.forEach(row => {
                 size_list.push(row['size']);
-                debug(`size${row['size']}`)
+                debug(`size${row['size']}`);
             });
         })
         .catch(function (error) {
