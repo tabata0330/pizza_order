@@ -1,6 +1,10 @@
 'use strict';
-const sqlite = require('sqlite3').verbose();
-const db = new sqlite.Database('../db/pizzabot.db');
+const { Client } = require('pg');
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+client.connect();
 
 const debug = require("debug")("bot-express:skill");
 
@@ -8,7 +12,7 @@ const debug = require("debug")("bot-express:skill");
 module.exports = class Showtable {
     async finish(bot, event, context, resolve, reject){
         var pizza_list = [];
-        db.each('SELECT * FROM pizza', (error, row) => {
+        client.query('SELECT * FROM pizza', (error, row) => {
             if(error) {
               console.error('Error!', error);
               return;
@@ -17,7 +21,7 @@ module.exports = class Showtable {
         });
 
         var size_list = [];
-        db.each('SELECT * FROM size', (error, row) => {
+        client.query('SELECT * FROM size', (error, row) => {
             if(error) {
               console.error('Error!', error);
               return;

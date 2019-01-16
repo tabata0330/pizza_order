@@ -1,7 +1,11 @@
 'use strict';
-const sqlite = require('sqlite3').verbose();
-const db = new sqlite.Database('../db/pizzabot.db');
-
+const { Client } = require('pg');
+const prepare = require('pg-prepare');
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+client.connect();
 const debug = require("debug")("bot-express:skill");
 
 
@@ -26,12 +30,12 @@ module.exports = class Insertdb {
     async finish(bot, event, context, resolve, reject){
         let pizza = context.confirmed.pizza;
         let size = context.confirmed.size;
-        db.serialize(() =>{
-            const pizzaStmt = db.prepare('INSERT INTO pizza (name) VALUES (?)');
-            pizzaStmt.run([pizza]);
-            const sizeStmt = db.prepare('INSERT INTO size (size) VALUES (?)');
-            sizeStmt.run([size]);
-        })
+        let pizzaStmt = prepare`INSERT INTO pizza (name) VALUES (${pizza})`;
+        let sizeStmt = prepare`INSERT INTO size (size) VALUES (${size})`;
+
+        client.query(pizzaStmt);
+        client.query(sizeStmt);
+        client.end();
 
         let messages = [
         	{
