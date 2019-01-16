@@ -25,6 +25,8 @@ module.exports = class Showtable {
 
         var pizzaes = pizza_list.join(', ');
         var sizes = size_list.join(', ');
+        debug(`!!!!!!!!!!!!!!!!!!!!!ピザ${pizzaes}`);
+        debug(`!!!!!!!!!!!!!!!!!!!!!サイズ${sizes}`);
 
         let messages = [
         	{
