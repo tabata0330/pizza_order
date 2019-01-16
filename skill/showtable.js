@@ -6,13 +6,11 @@ const debug = require("debug")("bot-express:skill");
 module.exports = class Showtable {
     async finish(bot, event, context, resolve, reject){
         var pizza_list = [];
-        db.any('SELECT * FROM pizza')
+        await db.any('SELECT * FROM pizza')
         .then(function(data){
             data.forEach(row => {
-                for (let key of Object.keys(row)) {
-                    pizza_list.push(row['name']);
-                    debug(`name${row['name']}`)
-                }
+                pizza_list.push(row['name']);
+                debug(`name${row['name']}`);
             });
         })
         .catch(function (error) {
@@ -20,13 +18,11 @@ module.exports = class Showtable {
         })
 
         var size_list = [];
-        db.any('SELECT * FROM size')
+        await db.any('SELECT * FROM size')
         .then(function(data){
             data.forEach(row => {
-                for (let key of Object.keys(row)) {
-                    size_list.push(row['size']);
-                    debug(`size${row['size']}`)
-                }
+                size_list.push(row['size']);
+                debug(`size${row['size']}`)
             });
         })
         .catch(function (error) {
