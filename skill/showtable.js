@@ -8,6 +8,7 @@ module.exports = class Showtable {
         var pizza_list = [];
         db.any('SELECT * FROM pizza')
         .then(function(data){
+            debug(`入ったpizza`);
             pizza_list.push(data);
         })
         .catch(function (error) {
@@ -17,6 +18,7 @@ module.exports = class Showtable {
         var size_list = [];
         db.any('SELECT * FROM size')
         .then(function(data){
+            debug(`入ったsize`);
             size_list.push(data);
         })
         .catch(function (error) {
