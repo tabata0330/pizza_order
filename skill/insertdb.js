@@ -8,13 +8,13 @@ module.exports = class Insertdb {
             pizza: {
                 message_to_confirm: {
                     type: "text",
-                    altText: "登録したいピザを教えてください"
+                    text: "登録したいピザを教えてください"
                 }
             },
             size: {
                 message_to_confirm: {
                     type: "text",
-                    altText: "登録したいサイズを教えてください"
+                    text: "登録したいサイズを教えてください"
                 }
             }
         };
