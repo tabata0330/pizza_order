@@ -13,6 +13,7 @@
     "bot-express": "^0.5.26",
     "express": "^4.16.4",
     "pg": "*",
-    "pg-prepare": "*"
+    "pg-prepare": "*",
+    "pg-promise": "*"
   }
 }

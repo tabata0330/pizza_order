@@ -1,11 +1,6 @@
 'use strict';
-const { Client } = require('pg');
-const prepare = require('pg-prepare');
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
-client.connect();
+const db = require('../db');
+ 
 const debug = require("debug")("bot-express:skill");
 
 
@@ -30,12 +25,26 @@ module.exports = class Insertdb {
     async finish(bot, event, context, resolve, reject){
         let pizza = context.confirmed.pizza;
         let size = context.confirmed.size;
-        let pizzaStmt = prepare`INSERT INTO pizza (name) VALUES (${pizza})`;
-        let sizeStmt = prepare`INSERT INTO size (size) VALUES (${size})`;
-
-        client.query(pizzaStmt);
-        client.query(sizeStmt);
-        client.end();
+        let pizzaStmt = `INSERT INTO pizza (name) VALUES ($1)`;
+        let sizeStmt = `INSERT INTO size (size) VALUES ($1)`;
+        
+        db.any(pizzaStmt, [pizza])
+        .then(function(data){
+            debug("pizza insert success!!");
+        })
+        .catch(function(error){
+            debug("pizza insert error…");
+        });
+        db.any(sizeStmt, [size])
+        .then(function(data){
+            debug("size insert success!!");
+        })
+        .catch(function(error){
+            debug("size insert error…");
+        });
+        // client.query(pizzaStmt);
+        // client.query(sizeStmt);
+        // client.end();
 
         let messages = [
         	{

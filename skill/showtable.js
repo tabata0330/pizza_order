@@ -1,33 +1,27 @@
 'use strict';
-const { Client } = require('pg');
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
-client.connect();
-
+const db = require('../db');
 const debug = require("debug")("bot-express:skill");
 
 
 module.exports = class Showtable {
     async finish(bot, event, context, resolve, reject){
         var pizza_list = [];
-        client.query('SELECT * FROM pizza', (error, row) => {
-            if(error) {
-              console.error('Error!', error);
-              return;
-            }
-            pizza_list.push(row.name);
-        });
+        db.any('SELECT * FROM pizza')
+        .then(function(data){
+            pizza_list.push(data);
+        })
+        .catch(function (error) {
+            debug(`error occurred at pizza SELECT`);
+        })
 
         var size_list = [];
-        client.query('SELECT * FROM size', (error, row) => {
-            if(error) {
-              console.error('Error!', error);
-              return;
-            }
-            size_list.push(row.size);
-        });
+        db.any('SELECT * FROM size')
+        .then(function(data){
+            size_list.push(data);
+        })
+        .catch(function (error) {
+            debug(`error occurred at size SELECT`);
+        })
 
         var pizzaes = pizza_list.join(', ');
         var sizes = size_list.join(', ');
