@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS pizza;
 DROP TABLE IF EXISTS size;
 
 CREATE TABLE pizza(
-    id integer primary key,
+    id serial,
     name varchar unique
 );
 
@@ -13,7 +13,7 @@ INSERT INTO pizza (name) VALUES ('シーフード');
 
 
 CREATE TABLE size(
-    id integer primary key,
+    id serial,
     size varchar unique
 );
 
